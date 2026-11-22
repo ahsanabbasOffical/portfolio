@@ -1,0 +1,1327 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ahsan Abbas | Industrial System Architect &amp; IIoT Integrator</title>
+    <meta name="description" content="Portfolio of Ahsan Abbas — System Architect and Integrator based in Karachi, Pakistan, specializing in Smart IIoT, Industrial Mesh VPN Architecture, and Enterprise SCADA Telemetry.">
+    
+    <!-- Google Fonts: Inter & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        obsidian: '#0b0f17',
+                        slatepanel: '#111827',
+                        cardbg: '#131b2b',
+                        borderline: '#1e293b',
+                        cybercyan: '#06b6d4',
+                        telemetrygreen: '#10b981',
+                        amberalert: '#f59e0b',
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Cyber-physical grid & subtle circuit aesthetic */
+        body {
+            background-color: #0b0f17;
+            color: #e2e8f0;
+            background-image: 
+                linear-gradient(to right, rgba(6, 182, 212, 0.04) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(6, 182, 212, 0.04) 1px, transparent 1px);
+            background-size: 40px 40px;
+            overflow-x: hidden;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0b0f17;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #06b6d4;
+        }
+
+        /* Animated data packet along SVG lines */
+        @keyframes dashFlow {
+            to {
+                stroke-dashoffset: -24;
+            }
+        }
+        .data-stream {
+            stroke-dasharray: 6 6;
+            animation: dashFlow 1.2s linear infinite;
+        }
+
+        /* Subtle glow borders */
+        .cyber-card {
+            background: linear-gradient(145deg, rgba(19, 27, 43, 0.92), rgba(11, 15, 23, 0.96));
+            border: 1px solid rgba(30, 41, 59, 0.9);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .cyber-card:hover {
+            border-color: rgba(6, 182, 212, 0.5);
+            box-shadow: 0 10px 30px -10px rgba(6, 182, 212, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .node-active {
+            border-color: #06b6d4 !important;
+            background: rgba(6, 182, 212, 0.12) !important;
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.22);
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-cyan-500/30 selection:text-cyan-200">
+
+    <!-- Top Live Telemetry Status Ticker -->
+    <div class="bg-[#080b12] border-b border-slate-800/80 text-[11px] font-mono text-slate-400 py-1.5 px-4">
+        <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
+            <div class="flex items-center space-x-4">
+                <span class="inline-flex items-center text-emerald-400 font-medium">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 mr-2 animate-ping"></span>
+                    SYSTEM STATUS: ONLINE
+                </span>
+                <span class="hidden sm:inline text-slate-600">|</span>
+                <span class="hidden sm:inline-flex items-center text-cyan-400">
+                    MESH TUNNEL: ACTIVE (CGNAT-BYPASS)
+                </span>
+            </div>
+            <div class="flex items-center space-x-4">
+                <a href="tel:+923191869089" class="hidden sm:inline-flex items-center text-slate-300 hover:text-cyan-400 transition">
+                    +92-319-1869089
+                </a>
+                <span class="hidden sm:inline text-slate-600">|</span>
+                <a href="mailto:ahsanabbasofiical.mail@gmail.com" class="hidden lg:inline-flex items-center text-slate-300 hover:text-cyan-400 transition">
+                    ahsanabbasofiical.mail@gmail.com
+                </a>
+                <span class="hidden lg:inline text-slate-600">|</span>
+                <span id="live-clock" class="text-slate-400">PKT 19:00:00 UTC+5</span>
+                <span class="hidden md:inline text-slate-600">|</span>
+                <span class="hidden md:inline text-slate-400">NODE: KHI-IND-CORE-01</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <header class="sticky top-0 z-50 bg-[#0b0f17]/90 backdrop-blur-md border-b border-slate-800/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Brand -->
+                <a href="#" class="flex items-center space-x-3 group">
+                    <div class="relative w-9 h-9 rounded-lg overflow-hidden border border-cyan-500/50 shadow-sm shadow-cyan-500/20 group-hover:border-cyan-400 transition">
+                        <img src="Bahira.jpg" alt="Ahsan Abbas" class="w-full h-full object-cover object-top" onerror="this.onerror=null;this.src='https://placehold.co/100x100/0e1422/06b6d4?text=AA';">
+                    </div>
+                    <div>
+                        <span class="font-mono font-bold text-sm sm:text-base tracking-wider text-white">AHSAN ABBAS</span>
+                        <span class="font-mono text-xs text-cyan-400 ml-1">// SYS-ARCH</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex items-center space-x-7 text-sm font-medium text-slate-300">
+                    <a href="#architecture" class="hover:text-cyan-400 transition">Architecture</a>
+                    <a href="#deployments" class="hover:text-cyan-400 transition">Field Deployments</a>
+                    <a href="#telemetry" class="hover:text-cyan-400 transition">IIoT &amp; Telemetry</a>
+                    <a href="#experience" class="hover:text-cyan-400 transition">Timeline</a>
+                    <a href="#stack" class="hover:text-cyan-400 transition">Tech Stack</a>
+                    <a href="#contact" class="px-4 py-2 rounded-lg bg-cyan-500/10 border border-cyan-500/40 text-cyan-300 hover:bg-cyan-500 hover:text-slate-950 font-semibold transition">
+                        Consult / Inquire
+                    </a>
+                </nav>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" aria-label="Toggle Navigation" class="md:hidden p-2.5 rounded-lg bg-slate-800/80 border border-slate-700 text-slate-300 hover:text-cyan-400 focus:outline-none">
+                    <svg id="menu-icon-open" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                    <svg id="menu-icon-close" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Dropdown Navigation -->
+        <div id="mobile-menu" class="hidden md:hidden bg-[#0e1420] border-b border-slate-800 px-4 pt-3 pb-5 space-y-2">
+            <a href="#architecture" class="mobile-nav-link block px-3 py-2.5 rounded-lg text-sm font-medium text-slate-200 hover:bg-slate-800/80 hover:text-cyan-400">Architecture &amp; Core Focus</a>
+            <a href="#deployments" class="mobile-nav-link block px-3 py-2.5 rounded-lg text-sm font-medium text-slate-200 hover:bg-slate-800/80 hover:text-cyan-400">Field Deployments</a>
+            <a href="#telemetry" class="mobile-nav-link block px-3 py-2.5 rounded-lg text-sm font-medium text-slate-200 hover:bg-slate-800/80 hover:text-cyan-400">IIoT &amp; Live Telemetry</a>
+            <a href="#experience" class="mobile-nav-link block px-3 py-2.5 rounded-lg text-sm font-medium text-slate-200 hover:bg-slate-800/80 hover:text-cyan-400">Experience Timeline</a>
+            <a href="#stack" class="mobile-nav-link block px-3 py-2.5 rounded-lg text-sm font-medium text-slate-200 hover:bg-slate-800/80 hover:text-cyan-400">Technical Stack Matrix</a>
+            <a href="#contact" class="mobile-nav-link block px-3 py-2.5 rounded-lg text-sm font-semibold bg-cyan-500 text-slate-950 text-center mt-2">Request Technical Consultation</a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+
+        <!-- 1. HERO SECTION -->
+        <section class="relative pt-12 pb-16 lg:pt-20 lg:pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+                
+                <!-- Left Column: Value Proposition -->
+                <div class="lg:col-span-6 space-y-6">
+                    <!-- Cyber-Physical Framed Portrait & Identity Card -->
+                    <div class="flex flex-col sm:flex-row sm:items-center gap-4 p-3.5 rounded-2xl bg-[#0e1422]/90 border border-cyan-500/40 shadow-lg shadow-cyan-500/10">
+                        <div class="relative shrink-0 w-20 h-20 sm:w-24 sm:h-24 rounded-xl overflow-hidden border-2 border-cyan-500/50 shadow-md shadow-cyan-500/20">
+                            <img src="Bahira.jpg" alt="Ahsan Abbas - System Architect & Integrator" class="w-full h-full object-cover object-top" onerror="this.onerror=null;this.src='https://placehold.co/200x200/0e1422/06b6d4?text=Ahsan+Abbas';">
+                            <span class="absolute bottom-1.5 right-1.5 w-3 h-3 rounded-full bg-emerald-400 ring-2 ring-[#0b0f17]" title="Online // Karachi"></span>
+                        </div>
+                        <div class="space-y-1.5 min-w-0">
+                            <div class="inline-flex items-center px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-mono text-[11px] tracking-wide">
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 mr-1.5 animate-pulse"></span>
+                                ONLINE // KARACHI
+                            </div>
+                            <div class="font-mono font-bold text-sm sm:text-base text-white tracking-wide">
+                                AHSAN ABBAS — SYSTEM ARCHITECT &amp; INTEGRATOR
+                            </div>
+                            <div class="font-mono text-xs text-cyan-400">
+                                INDUSTRIAL IIOT &amp; MESH VPN // KRC TOTAL SOLUTIONS
+                            </div>
+                        </div>
+                    </div>
+
+                    <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white leading-[1.15]">
+                        Bridging Industrial Edge Hardware with <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400">Resilient Cloud &amp; Mesh</span> Architectures.
+                    </h1>
+
+                    <p class="text-base sm:text-lg text-slate-300 leading-relaxed">
+                        Architecting zero-downtime industrial connectivity across Pakistan’s manufacturing, healthcare, and pharmaceutical sectors. Specialized in CGNAT-bypassing mesh VPN gateways, low-level C edge telemetry firmware, predictive compressor maintenance systems, and enterprise full-stack SCADA platforms.
+                    </p>
+
+                    <!-- Primary & Secondary CTAs -->
+                    <div class="flex flex-col sm:flex-row gap-3.5 pt-2">
+                        <a href="#deployments" class="inline-flex items-center justify-center px-6 py-3.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-sm transition shadow-lg shadow-cyan-500/20">
+                            <span>Explore Deployments</span>
+                            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                            </svg>
+                        </a>
+                        <a href="#contact" class="inline-flex items-center justify-center px-6 py-3.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 hover:border-cyan-500/50 text-white font-semibold text-sm transition">
+                            <span>Request Technical Consultation</span>
+                        </a>
+                    </div>
+
+                    <!-- Quick Operational Metrics -->
+                    <div class="grid grid-cols-3 gap-4 pt-6 border-t border-slate-800/80 font-mono">
+                        <div>
+                            <div class="text-xl sm:text-2xl font-bold text-white">99.9%</div>
+                            <div class="text-xs text-slate-400 mt-0.5">Tunnel Uptime</div>
+                        </div>
+                        <div>
+                            <div class="text-xl sm:text-2xl font-bold text-cyan-400">CGNAT</div>
+                            <div class="text-xs text-slate-400 mt-0.5">Zero-Static-IP Bypass</div>
+                        </div>
+                        <div>
+                            <div class="text-xl sm:text-2xl font-bold text-emerald-400">2,000h</div>
+                            <div class="text-xs text-slate-400 mt-0.5">Predictive Threshold</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Interactive Edge-to-Cloud System Architecture Preview Widget -->
+                <div class="lg:col-span-6">
+                    <div class="rounded-2xl bg-[#0e1422] border border-slate-800 shadow-2xl overflow-hidden">
+                        <!-- Terminal / Blueprint Window Header -->
+                        <div class="bg-[#090d16] px-4 py-3 border-b border-slate-800 flex items-center justify-between">
+                            <div class="flex items-center space-x-2">
+                                <span class="w-3 h-3 rounded-full bg-rose-500/80"></span>
+                                <span class="w-3 h-3 rounded-full bg-amber-500/80"></span>
+                                <span class="w-3 h-3 rounded-full bg-emerald-500/80"></span>
+                                <span class="ml-2 font-mono text-xs text-slate-400">topology://edge-to-cloud-mesh.sys</span>
+                            </div>
+                            <span class="font-mono text-[11px] px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+                                INTERACTIVE NODE MAP
+                            </span>
+                        </div>
+
+                        <div class="p-5 sm:p-6 space-y-5">
+                            <div class="flex items-center justify-between text-xs font-mono text-slate-400">
+                                <span>CLICK ANY NODE TO INSPECT TELEMETRY LAYER</span>
+                                <span id="packet-rate" class="text-cyan-400">TX/RX: 14.2 KB/s</span>
+                            </div>
+
+                            <!-- 3-Stage Interactive Topology Nodes -->
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 relative">
+                                <!-- Node 1: Plant Floor Edge -->
+                                <button type="button" onclick="selectArchNode('edge')" id="node-edge" class="arch-node node-active text-left p-4 rounded-xl bg-slate-900/90 border border-slate-700 transition cursor-pointer">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="text-[11px] font-mono text-cyan-400">LAYER 01 // EDGE</span>
+                                        <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                                    </div>
+                                    <div class="font-bold text-sm text-white">Plant Sensors &amp; ESP32</div>
+                                    <div class="text-xs text-slate-400 mt-1 font-mono">C Firmware • Relay I/O • Flash NVS</div>
+                                </button>
+
+                                <!-- Node 2: Mesh VPN Gateway -->
+                                <button type="button" onclick="selectArchNode('mesh')" id="node-mesh" class="arch-node text-left p-4 rounded-xl bg-slate-900/90 border border-slate-700 transition cursor-pointer">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="text-[11px] font-mono text-cyan-400">LAYER 02 // MESH</span>
+                                        <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                                    </div>
+                                    <div class="font-bold text-sm text-white">OpenWrt Mesh Gateway</div>
+                                    <div class="text-xs text-slate-400 mt-1 font-mono">ZeroTier / Tailscale • C Watchdog</div>
+                                </button>
+
+                                <!-- Node 3: Enterprise SCADA -->
+                                <button type="button" onclick="selectArchNode('cloud')" id="node-cloud" class="arch-node text-left p-4 rounded-xl bg-slate-900/90 border border-slate-700 transition cursor-pointer">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="text-[11px] font-mono text-cyan-400">LAYER 03 // SCADA</span>
+                                        <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                                    </div>
+                                    <div class="font-bold text-sm text-white">Web SCADA &amp; Alerts</div>
+                                    <div class="text-xs text-slate-400 mt-1 font-mono">.NET Blazor • SQLite • WhatsApp API</div>
+                                </button>
+                            </div>
+
+                            <!-- Animated SVG Data Pipeline Connector -->
+                            <div class="py-1">
+                                <svg class="w-full h-6" viewBox="0 0 600 24" preserveAspectRatio="none">
+                                    <line x1="20" y1="12" x2="580" y2="12" stroke="#1e293b" stroke-width="2" />
+                                    <line x1="20" y1="12" x2="580" y2="12" stroke="#06b6d4" stroke-width="2" class="data-stream" />
+                                    <circle cx="100" cy="12" r="4" fill="#10b981" />
+                                    <circle cx="300" cy="12" r="4" fill="#06b6d4" />
+                                    <circle cx="500" cy="12" r="4" fill="#10b981" />
+                                </svg>
+                            </div>
+
+                            <!-- Dynamic Node Inspector Console -->
+                            <div id="arch-inspector-box" class="rounded-xl bg-[#080c14] border border-slate-800 p-4 font-mono text-xs space-y-2.5">
+                                <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800/80 pb-2">
+                                    <span id="inspector-title" class="text-cyan-400 font-bold">[EDGE_NODE] ESP32-WROOM-32D // INDUSTRIAL I/O</span>
+                                    <span id="inspector-ip" class="text-emerald-400">ADDR: 10.147.18.42 (INTERNAL)</span>
+                                </div>
+                                <p id="inspector-desc" class="text-slate-300 font-sans text-xs sm:text-sm leading-relaxed">
+                                    Interfaces directly with HVAC chillers and compressor contactors via opto-isolated interposing relays. Executes deterministic C firmware with non-volatile flash wear-leveling to preserve cumulative runtime hours across abrupt facility power outages.
+                                </p>
+                                <div id="inspector-metrics" class="grid grid-cols-2 sm:grid-cols-3 gap-2 pt-1 text-[11px]">
+                                    <div class="bg-slate-900/90 px-2.5 py-1.5 rounded border border-slate-800">
+                                        <span class="text-slate-500">RUNTIME:</span> <span class="text-white">1,894.5 HRS</span>
+                                    </div>
+                                    <div class="bg-slate-900/90 px-2.5 py-1.5 rounded border border-slate-800">
+                                        <span class="text-slate-500">NVS FLASH:</span> <span class="text-emerald-400">CRC32 OK</span>
+                                    </div>
+                                    <div class="bg-slate-900/90 px-2.5 py-1.5 rounded border border-slate-800 col-span-2 sm:col-span-1">
+                                        <span class="text-slate-500">POLL RATE:</span> <span class="text-cyan-400">250 ms</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 2. CORE SERVICES & ARCHITECTURE FOCUS -->
+        <section id="architecture" class="py-16 lg:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-slate-800/60">
+            <div class="max-w-3xl mb-12">
+                <div class="font-mono text-xs text-cyan-400 tracking-widest uppercase mb-2">// 01. SYSTEM ARCHITECTURE &amp; CAPABILITIES</div>
+                <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-white">Enterprise-Grade IIoT &amp; Resilient Mesh Engineering</h2>
+                <p class="text-slate-400 mt-3 text-sm sm:text-base">
+                    End-to-end industrial integration engineered to eliminate static IP dependencies, prevent unscheduled mechanical downtime, and unify distributed plant telemetry.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Service Card 1 -->
+                <div class="cyber-card rounded-2xl p-6 sm:p-7 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="w-11 h-11 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                                </svg>
+                            </div>
+                            <span class="font-mono text-xs text-slate-500">NET // VPN-MESH</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">Industrial Mesh VPN &amp; CGNAT Bypass</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed mb-5">
+                            Architecting encrypted site-to-site and remote diagnostic tunnels behind restrictive cellular/ISP Carrier-Grade NAT (CGNAT) without costly static public IPs. Custom OpenWrt firmware builds on enterprise routers ensure self-healing tunnel persistence.
+                        </p>
+                    </div>
+                    <div class="flex flex-wrap gap-2 pt-4 border-t border-slate-800/80 font-mono text-xs">
+                        <span class="px-2.5 py-1 rounded-md bg-slate-900 text-cyan-300 border border-slate-700/80">OpenWrt</span>
+                        <span class="px-2.5 py-1 rounded-md bg-slate-900 text-cyan-300 border border-slate-700/80">Tailscale</span>
+                        <span class="px-2.5 py-1 rounded-md bg-slate-900 text-cyan-300 border border-slate-700/80">ZeroTier</span>
+                        <span class="px-2.5 py-1 rounded-md bg-slate-900 text-slate-300 border border-slate-700/80">TP-Link ER605v2</span>
+                        <span class="px-2.5 py-1 rounded-md bg-slate-900 text-slate-300 border border-slate-700/80">D-Link DIR-853</span>
+                    </div>
+                </div>
+
+                <!-- Service Card 2 -->
+                <div class="cyber-card rounded-2xl p-6 sm:p-7 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="w-11 h-11 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
+                                </svg>
+                            </div>
+                            <span class="font-mono text-xs text-slate-500">EDGE // EMBEDDED-C</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">Smart IIoT &amp; Edge Telemetry</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed mb-5">
+                            Bare-metal and RTOS C firmware on ESP32 microcontrollers and MIPS/ARM Linux routers. Features interposing relay state sensing, non-volatile flash runtime accumulation, and lightweight router-level C watchdogs for real-time health reporting.
+                        </p>
+                    </div>
+                    <div class="flex flex-wrap gap-2 pt-4 border-t border-slate-800/80 font-mono text-xs">
+                        <span class="px-2.5 py-1 rounded-md bg-slate-900 text-emerald-300 border border-slate-700/80">ESP32 in C</span>
+                        <span class="px-2.5 py-1 rounded-md bg-slate-900 text-emerald-300 border border-slate-700/80">Non-Volatile Flash</span>
+                        <span class="px-2.5 py-1 rounded-md bg-slate-900 text-emerald-300 border border-slate-700/80">Relay Sensing</span>
+                        <span class="px-2.5 py-1 rounded-md bg-slate-900 text-slate-300 border border-slate-700/80">C Watchdogs</span>
+                    </div>
+                </div>
+
+                <!-- Service Card 3 -->
+                <div class="cyber-card rounded-2xl p-6 sm:p-7 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="w-11 h-11 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                                </svg>
+                            </div>
+                            <span class="font-mono text-xs text-slate-500">APP // SCADA-WEB</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">Custom SCADA &amp; Enterprise Dashboards</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed mb-5">
+                            Full-stack industrial telemetry interfaces built for plant engineers and facility directors. High-frequency data ingestion into SQLite/SQL Server with automated WhatsApp and SMTP escalation workflows prior to critical maintenance intervals.
+                        </p>
+                    </div>
+                    <div class="flex flex-wrap gap-2 pt-4 border-t border-slate-800/80 font-mono text-xs">
+                        <span class="px-2.5 py-1 rounded-md bg-slate-900 text-cyan-300 border border-slate-700/80">ASP.NET Core</span>
+                        <span class="px-2.5 py-1 rounded-md bg-slate-900 text-cyan-300 border border-slate-700/80">Blazor</span>
+                        <span class="px-2.5 py-1 rounded-md bg-slate-900 text-cyan-300 border border-slate-700/80">Next.js</span>
+                        <span class="px-2.5 py-1 rounded-md bg-slate-900 text-slate-300 border border-slate-700/80">SQLite / SQL Server</span>
+                        <span class="px-2.5 py-1 rounded-md bg-slate-900 text-emerald-300 border border-slate-700/80">WhatsApp Alerts</span>
+                    </div>
+                </div>
+
+                <!-- Service Card 4 -->
+                <div class="cyber-card rounded-2xl p-6 sm:p-7 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="w-11 h-11 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01" />
+                                </svg>
+                            </div>
+                            <span class="font-mono text-xs text-slate-500">INFRA // PHYSICAL-L1</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">Structured Network Infrastructure &amp; Hardware Sourcing</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed mb-5">
+                            Turnkey physical-layer deployment including shielded Cat6/T568B industrial cabling, patch panel termination, server rack integration, and direct component-level hardware diagnostics and procurement across Karachi’s enterprise IT markets.
+                        </p>
+                    </div>
+                    <div class="flex flex-wrap gap-2 pt-4 border-t border-slate-800/80 font-mono text-xs">
+                        <span class="px-2.5 py-1 rounded-md bg-slate-900 text-emerald-300 border border-slate-700/80">Cat6 / T568B</span>
+                        <span class="px-2.5 py-1 rounded-md bg-slate-900 text-emerald-300 border border-slate-700/80">Rack Integration</span>
+                        <span class="px-2.5 py-1 rounded-md bg-slate-900 text-slate-300 border border-slate-700/80">Hardware Diagnostics</span>
+                        <span class="px-2.5 py-1 rounded-md bg-slate-900 text-slate-300 border border-slate-700/80">B2B Sourcing</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. FIELD DEPLOYMENTS & CASE STUDIES -->
+        <section id="deployments" class="py-16 lg:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-slate-800/60">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
+                <div>
+                    <div class="font-mono text-xs text-cyan-400 tracking-widest uppercase mb-2">// 02. PRODUCTION CASE STUDIES</div>
+                    <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-white">Field Deployments &amp; Industrial Systems</h2>
+                </div>
+
+                <!-- Interactive Filter Tabs -->
+                <div class="flex flex-wrap gap-2 font-mono text-xs" id="project-filters">
+                    <button type="button" data-filter="all" class="filter-btn px-3.5 py-2 rounded-lg bg-cyan-500 text-slate-950 font-bold transition">
+                        ALL SYSTEMS (05)
+                    </button>
+                    <button type="button" data-filter="vpn" class="filter-btn px-3.5 py-2 rounded-lg bg-slate-900 text-slate-300 border border-slate-700 hover:border-cyan-500/50 transition">
+                        MESH VPN &amp; GATEWAYS
+                    </button>
+                    <button type="button" data-filter="iiot" class="filter-btn px-3.5 py-2 rounded-lg bg-slate-900 text-slate-300 border border-slate-700 hover:border-cyan-500/50 transition">
+                        EDGE FIRMWARE &amp; IIOT
+                    </button>
+                    <button type="button" data-filter="scada" class="filter-btn px-3.5 py-2 rounded-lg bg-slate-900 text-slate-300 border border-slate-700 hover:border-cyan-500/50 transition">
+                        SCADA TELEMETRY
+                    </button>
+                </div>
+            </div>
+
+            <!-- Case Studies Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6" id="projects-grid">
+
+                <!-- Project 1: Carrier Chiller Plant Remote VPN Infrastructure (NICVD Sukkur) -->
+                <article data-category="vpn" class="project-card cyber-card rounded-2xl p-6 sm:p-7 flex flex-col justify-between">
+                    <div>
+                        <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+                            <span class="px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 font-mono text-xs">
+                                HEALTHCARE HVAC INFRASTRUCTURE
+                            </span>
+                            <span class="font-mono text-xs text-emerald-400 flex items-center">
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 mr-1.5"></span>
+                                NICVD SUKKUR
+                            </span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2.5">Carrier Chiller Plant Remote VPN Infrastructure</h3>
+                        <p class="text-slate-300 text-sm leading-relaxed mb-4">
+                            Engineered and deployed a mission-critical remote VPN gateway architecture for the Carrier centrifugal chiller plant at NICVD Sukkur. Overcame regional ISP NAT limitations by integrating TP-Link ER605 multi-WAN hardware with redundant OpenVPN and Tailscale mesh overlays, enabling real-time OEM chiller diagnostics and fault isolation without onsite travel.
+                        </p>
+                        <div class="bg-[#090d16] rounded-xl p-3.5 border border-slate-800/90 mb-5 font-mono text-xs space-y-1.5">
+                            <div class="flex justify-between">
+                                <span class="text-slate-500">GATEWAY HARDWARE:</span>
+                                <span class="text-slate-200">TP-Link ER605 Multi-WAN</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-500">TUNNEL PROTOCOL:</span>
+                                <span class="text-cyan-400">OpenVPN + Tailscale Failover</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-500">OPERATIONAL IMPACT:</span>
+                                <span class="text-emerald-400">Zero-Latency Remote BMS Access</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap gap-2 font-mono text-xs">
+                        <span class="px-2.5 py-1 rounded bg-slate-900 text-slate-300 border border-slate-700">TP-Link ER605</span>
+                        <span class="px-2.5 py-1 rounded bg-slate-900 text-slate-300 border border-slate-700">Tailscale Mesh</span>
+                        <span class="px-2.5 py-1 rounded bg-slate-900 text-slate-300 border border-slate-700">OpenVPN</span>
+                        <span class="px-2.5 py-1 rounded bg-slate-900 text-slate-300 border border-slate-700">Carrier Chiller BMS</span>
+                    </div>
+                </article>
+
+                <!-- Project 2: York HVAC & BMS Automation Gateway (Hudson Pharma) -->
+                <article data-category="vpn" class="project-card cyber-card rounded-2xl p-6 sm:p-7 flex flex-col justify-between">
+                    <div>
+                        <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+                            <span class="px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 font-mono text-xs">
+                                PHARMACEUTICAL CLEANROOM HVAC
+                            </span>
+                            <span class="font-mono text-xs text-emerald-400 flex items-center">
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 mr-1.5"></span>
+                                HUDSON PHARMA
+                            </span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2.5">York HVAC &amp; BMS Automation Gateway</h3>
+                        <p class="text-slate-300 text-sm leading-relaxed mb-4">
+                            Flashed and hardened custom OpenWrt firmware onto a D-Link DIR-853 A3 router to serve as a dedicated industrial edge gateway for Hudson Pharma’s York HVAC &amp; Building Management System (BMS). Configured dual ZeroTier and Tailscale virtual Ethernet bridges with strict firewall subnet isolation for secure remote engineering access.
+                        </p>
+                        <div class="bg-[#090d16] rounded-xl p-3.5 border border-slate-800/90 mb-5 font-mono text-xs space-y-1.5">
+                            <div class="flex justify-between">
+                                <span class="text-slate-500">EDGE PLATFORM:</span>
+                                <span class="text-slate-200">D-Link DIR-853 A3 (OpenWrt)</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-500">OVERLAY NETWORK:</span>
+                                <span class="text-cyan-400">ZeroTier L2 Bridge + Tailscale</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-500">SECURITY POSTURE:</span>
+                                <span class="text-emerald-400">Isolated OT/BMS VLAN Routing</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap gap-2 font-mono text-xs">
+                        <span class="px-2.5 py-1 rounded bg-slate-900 text-slate-300 border border-slate-700">OpenWrt</span>
+                        <span class="px-2.5 py-1 rounded bg-slate-900 text-slate-300 border border-slate-700">ZeroTier</span>
+                        <span class="px-2.5 py-1 rounded bg-slate-900 text-slate-300 border border-slate-700">D-Link DIR-853 A3</span>
+                        <span class="px-2.5 py-1 rounded bg-slate-900 text-slate-300 border border-slate-700">York BMS</span>
+                    </div>
+                </article>
+
+                <!-- Project 3: Predictive Compressor Runtime & Alerting System -->
+                <article data-category="iiot" class="project-card cyber-card rounded-2xl p-6 sm:p-7 flex flex-col justify-between">
+                    <div>
+                        <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+                            <span class="px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-mono text-xs">
+                                PREDICTIVE MAINTENANCE IIOT
+                            </span>
+                            <span class="font-mono text-xs text-amber-400 flex items-center">
+                                <span class="w-1.5 h-1.5 rounded-full bg-amber-400 mr-1.5"></span>
+                                2,000-HR THRESHOLD ENGINE
+                            </span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2.5">Predictive Compressor Runtime &amp; Alerting System</h3>
+                        <p class="text-slate-300 text-sm leading-relaxed mb-4">
+                            Developed bare-metal C firmware on ESP32 to track industrial compressor operating hours via opto-isolated interposing relays. Implemented non-volatile flash memory journaling so runtime counters survive sudden blackouts, paired with an embedded web dashboard and automated WhatsApp alerts dispatched exactly 100 hours prior to the 2,000-hour overhaul mark.
+                        </p>
+                        <div class="bg-[#090d16] rounded-xl p-3.5 border border-slate-800/90 mb-5 font-mono text-xs space-y-1.5">
+                            <div class="flex justify-between">
+                                <span class="text-slate-500">MCU &amp; LANGUAGE:</span>
+                                <span class="text-slate-200">ESP32 // Embedded C (ESP-IDF)</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-500">PERSISTENCE:</span>
+                                <span class="text-cyan-400">Non-Volatile Flash Wear-Leveled</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-500">ALERT TRIGGER:</span>
+                                <span class="text-amber-400">Automated WhatsApp @ 1,900 Hrs</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap gap-2 font-mono text-xs">
+                        <span class="px-2.5 py-1 rounded bg-slate-900 text-slate-300 border border-slate-700">ESP32 C</span>
+                        <span class="px-2.5 py-1 rounded bg-slate-900 text-slate-300 border border-slate-700">Interposing Relays</span>
+                        <span class="px-2.5 py-1 rounded bg-slate-900 text-slate-300 border border-slate-700">NVS Flash</span>
+                        <span class="px-2.5 py-1 rounded bg-slate-900 text-slate-300 border border-slate-700">WhatsApp Webhook</span>
+                    </div>
+                </article>
+
+                <!-- Project 4: OpenWrt Router C Telemetry & Watchdog Utility -->
+                <article data-category="iiot vpn" class="project-card cyber-card rounded-2xl p-6 sm:p-7 flex flex-col justify-between">
+                    <div>
+                        <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+                            <span class="px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-mono text-xs">
+                                LINUX ROUTER DAEMON // C
+                            </span>
+                            <span class="font-mono text-xs text-cyan-400 flex items-center">
+                                <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 mr-1.5"></span>
+                                EXTROOT USB-EXPANDED
+                            </span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2.5">OpenWrt Router C Telemetry &amp; Watchdog Utility</h3>
+                        <p class="text-slate-300 text-sm leading-relaxed mb-4">
+                            Engineered a lightweight, low-overhead C daemon running on USB-extroot expanded TP-Link ER605v2 routers under OpenWrt. Continuously polls WAN link latency, VPN tunnel handshake states, CPU load, and edge socket parameters—automatically restarting stalled tunnels and dispatching instant WhatsApp and email failover alerts upon link degradation.
+                        </p>
+                        <div class="bg-[#090d16] rounded-xl p-3.5 border border-slate-800/90 mb-5 font-mono text-xs space-y-1.5">
+                            <div class="flex justify-between">
+                                <span class="text-slate-500">TARGET HARDWARE:</span>
+                                <span class="text-slate-200">TP-Link ER605v2 (USB Extroot)</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-500">BINARY FOOTPRINT:</span>
+                                <span class="text-cyan-400">&lt; 48 KB Native MIPS C Daemon</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-500">FAILOVER ACTION:</span>
+                                <span class="text-emerald-400">Self-Heal + WhatsApp/SMTP Alert</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap gap-2 font-mono text-xs">
+                        <span class="px-2.5 py-1 rounded bg-slate-900 text-slate-300 border border-slate-700">POSIX C</span>
+                        <span class="px-2.5 py-1 rounded bg-slate-900 text-slate-300 border border-slate-700">OpenWrt SDK</span>
+                        <span class="px-2.5 py-1 rounded bg-slate-900 text-slate-300 border border-slate-700">ER605v2</span>
+                        <span class="px-2.5 py-1 rounded bg-slate-900 text-slate-300 border border-slate-700">SMTP / WhatsApp</span>
+                    </div>
+                </article>
+
+                <!-- Project 5: CityFlow SCADA Telemetry Platform -->
+                <article data-category="scada iiot" class="project-card cyber-card rounded-2xl p-6 sm:p-7 lg:col-span-2 flex flex-col justify-between">
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+                        <div class="lg:col-span-7">
+                            <div class="flex flex-wrap items-center gap-2 mb-4">
+                                <span class="px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 font-mono text-xs">
+                                    FULL-STACK ENTERPRISE SCADA
+                                </span>
+                                <span class="font-mono text-xs text-emerald-400">
+                                    ESP32 + BLAZOR .NET + SQLITE ON IIS
+                                </span>
+                            </div>
+                            <h3 class="text-xl sm:text-2xl font-bold text-white mb-2.5">CityFlow SCADA Telemetry Platform</h3>
+                            <p class="text-slate-300 text-sm leading-relaxed mb-4">
+                                Architected an end-to-end industrial telemetry suite bridging distributed ESP32 edge nodes with a real-time ASP.NET Core Blazor web SCADA dashboard hosted on Windows IIS. Features high-concurrency REST/SignalR ingestion, lightweight WAL-mode SQLite time-series storage, interactive trend visualization, and role-based operator controls.
+                            </p>
+                            <div class="flex flex-wrap gap-2 font-mono text-xs">
+                                <span class="px-2.5 py-1 rounded bg-slate-900 text-cyan-300 border border-slate-700">ASP.NET Core</span>
+                                <span class="px-2.5 py-1 rounded bg-slate-900 text-cyan-300 border border-slate-700">Blazor Server/WASM</span>
+                                <span class="px-2.5 py-1 rounded bg-slate-900 text-emerald-300 border border-slate-700">ESP32 Telemetry</span>
+                                <span class="px-2.5 py-1 rounded bg-slate-900 text-slate-300 border border-slate-700">SQLite WAL</span>
+                                <span class="px-2.5 py-1 rounded bg-slate-900 text-slate-300 border border-slate-700">Windows IIS</span>
+                            </div>
+                        </div>
+                        <div class="lg:col-span-5 bg-[#090d16] rounded-xl p-4 border border-slate-800 font-mono text-xs space-y-2.5">
+                            <div class="text-slate-400 border-b border-slate-800 pb-1.5 flex justify-between">
+                                <span>CITYFLOW_SCADA // ARCHITECTURE</span>
+                                <span class="text-emerald-400">IIS HOSTED</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-500">EDGE INGESTION:</span>
+                                <span class="text-slate-200">ESP32 JSON/HTTPS over Mesh</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-500">BACKEND ENGINE:</span>
+                                <span class="text-cyan-400">C# .NET Core + SignalR Push</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-500">DATA LAYER:</span>
+                                <span class="text-slate-200">SQLite High-Throughput DB</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-500">UI LATENCY:</span>
+                                <span class="text-emerald-400">&lt; 120ms Live State Sync</span>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- 4. INTERACTIVE IIOT & PREDICTIVE TELEMETRY SIMULATOR -->
+        <section id="telemetry" class="py-16 lg:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-slate-800/60">
+            <div class="max-w-3xl mb-10">
+                <div class="font-mono text-xs text-emerald-400 tracking-widest uppercase mb-2">// 03. LIVE EDGE TELEMETRY SANDBOX</div>
+                <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-white">Predictive Compressor Runtime &amp; Watchdog Monitor</h2>
+                <p class="text-slate-400 mt-3 text-sm sm:text-base">
+                    Interactive simulation of the ESP32 C runtime firmware and OpenWrt tunnel watchdog logic deployed across industrial chiller plants. Test maintenance threshold alerts and VPN failover triggers in real time.
+                </p>
+            </div>
+
+            <div class="rounded-2xl bg-[#0e1422] border border-slate-800 p-5 sm:p-8 shadow-2xl">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                    
+                    <!-- Left: Telemetry Readouts -->
+                    <div class="lg:col-span-7 space-y-6">
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 font-mono">
+                            <div class="p-4 rounded-xl bg-[#080c14] border border-slate-800">
+                                <div class="text-xs text-slate-500">COMPRESSOR #01 HOURS</div>
+                                <div id="sim-hours" class="text-2xl font-bold text-white mt-1">1,885.0 hrs</div>
+                                <div class="text-[11px] text-cyan-400 mt-1">TARGET: 2,000.0 hrs</div>
+                            </div>
+                            <div class="p-4 rounded-xl bg-[#080c14] border border-slate-800">
+                                <div class="text-xs text-slate-500">HOURS TO SERVICE</div>
+                                <div id="sim-remaining" class="text-2xl font-bold text-emerald-400 mt-1">115.0 hrs</div>
+                                <div class="text-[11px] text-slate-400 mt-1">ALERT AT &le; 100.0 hrs</div>
+                            </div>
+                            <div class="p-4 rounded-xl bg-[#080c14] border border-slate-800">
+                                <div class="text-xs text-slate-500">MESH TUNNEL RTT</div>
+                                <div id="sim-rtt" class="text-2xl font-bold text-cyan-400 mt-1">18 ms</div>
+                                <div id="sim-tunnel-state" class="text-[11px] text-emerald-400 mt-1">WIREGUARD/ZT: UP</div>
+                            </div>
+                        </div>
+
+                        <!-- Progress Bar toward 2,000h Maintenance -->
+                        <div class="space-y-2">
+                            <div class="flex justify-between font-mono text-xs">
+                                <span class="text-slate-400">MAINTENANCE CYCLE WEAR (0h — 2,000h)</span>
+                                <span id="sim-percent" class="text-cyan-400">94.25%</span>
+                            </div>
+                            <div class="w-full h-3.5 rounded-full bg-slate-900 border border-slate-800 overflow-hidden p-0.5">
+                                <div id="sim-progress-bar" class="h-full rounded-full bg-gradient-to-r from-cyan-500 to-emerald-400 transition-all duration-300" style="width: 94.25%"></div>
+                            </div>
+                        </div>
+
+                        <!-- Interactive Controls -->
+                        <div class="flex flex-wrap gap-3 pt-1">
+                            <button type="button" onclick="advanceCompressorHours(20)" class="px-4 py-2.5 rounded-xl bg-cyan-500/15 hover:bg-cyan-500/25 border border-cyan-500/40 text-cyan-300 font-mono text-xs font-semibold transition">
+                                + SIMULATE 20 RUN HOURS
+                            </button>
+                            <button type="button" onclick="simulateTunnelDrop()" class="px-4 py-2.5 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/40 text-amber-300 font-mono text-xs font-semibold transition">
+                                TEST WATCHDOG FAILOVER
+                            </button>
+                            <button type="button" onclick="resetTelemetrySim()" class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 font-mono text-xs transition">
+                                RESET NVS COUNTER
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Right: Automated WhatsApp / C Daemon Event Console -->
+                    <div class="lg:col-span-5">
+                        <div class="rounded-xl bg-[#070a11] border border-slate-800 p-4 font-mono text-xs h-64 flex flex-col">
+                            <div class="flex items-center justify-between border-b border-slate-800 pb-2 mb-2 text-[11px]">
+                                <span class="text-emerald-400 font-semibold">DAEMON LOG // /var/log/iiot_watchdog.log</span>
+                                <span class="text-slate-500">LIVE</span>
+                            </div>
+                            <div id="watchdog-console" class="space-y-2 overflow-y-auto flex-1 pr-1 text-[11px] leading-relaxed text-slate-300">
+                                <div><span class="text-slate-500">[18:58:02]</span> <span class="text-cyan-400">[ESP32-NVS]</span> Flash checkpoint saved: 1885.0h (CRC32 valid).</div>
+                                <div><span class="text-slate-500">[18:59:10]</span> <span class="text-emerald-400">[ER605-C]</span> ZeroTier &amp; Tailscale peers reachable (18ms).</div>
+                                <div><span class="text-slate-500">[19:00:00]</span> <span class="text-slate-400">[SCADA]</span> Telemetry frame pushed to CityFlow IIS endpoint.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. EXPERIENCE & AFFILIATION TIMELINE -->
+        <section id="experience" class="py-16 lg:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-slate-800/60">
+            <div class="max-w-3xl mb-12">
+                <div class="font-mono text-xs text-cyan-400 tracking-widest uppercase mb-2">// 04. FIELD TRAJECTORY &amp; AFFILIATIONS</div>
+                <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-white">Industrial Experience &amp; Field Operations</h2>
+            </div>
+
+            <div class="relative border-l-2 border-slate-800 ml-3 sm:ml-6 space-y-10">
+                
+                <!-- Timeline Item 1 -->
+                <div class="relative pl-7 sm:pl-10">
+                    <span class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-cyan-500 ring-4 ring-[#0b0f17]"></span>
+                    <div class="cyber-card rounded-2xl p-6">
+                        <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+                            <span class="font-mono text-xs text-cyan-400 font-semibold">CURRENT // SYSTEM ARCHITECT &amp; TECHNICAL VENDOR</span>
+                            <span class="font-mono text-xs px-2.5 py-1 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+                                KARACHI &amp; NATIONWIDE
+                            </span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">Independent System Architect &amp; Integrator — KRC Total Solutions</h3>
+                        <p class="text-slate-300 text-sm leading-relaxed mt-2.5">
+                            Leading industrial mesh VPN architectures, smart IIoT edge telemetry deployments, and turnkey B2B technical solutions across Karachi’s primary industrial corridors—including <span class="text-white font-medium">Port Qasim, Korangi Industrial Area, and S.I.T.E.</span>—as well as nationwide enterprise sites in <span class="text-white font-medium">Lahore, Sukkur, and Hyderabad</span>.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Timeline Item 2 -->
+                <div class="relative pl-7 sm:pl-10">
+                    <span class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-emerald-500 ring-4 ring-[#0b0f17]"></span>
+                    <div class="cyber-card rounded-2xl p-6">
+                        <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+                            <span class="font-mono text-xs text-emerald-400 font-semibold">CAREER PROGRESSION // ENGINEERING OPERATIONS</span>
+                            <span class="font-mono text-xs text-slate-400">NORTH KARACHI, PK</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">Field Network &amp; Software Technician — KRC Total Solutions</h3>
+                        <p class="text-slate-300 text-sm leading-relaxed mt-2.5">
+                            Progressed rapidly from technical intern to leading onsite enterprise networking, structured T568B cabling, component-level hardware diagnostics, and custom C#/.NET and embedded C software integration for commercial and industrial clients.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Timeline Item 3 -->
+                <div class="relative pl-7 sm:pl-10">
+                    <span class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-slate-600 ring-4 ring-[#0b0f17]"></span>
+                    <div class="cyber-card rounded-2xl p-6">
+                        <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+                            <span class="font-mono text-xs text-cyan-400 font-semibold">SUPPLY CHAIN &amp; HARDWARE DIAGNOSTICS</span>
+                            <span class="font-mono text-xs text-slate-400">KARACHI IT CORRIDORS</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">Hardware Inventory &amp; Supply Chain Management</h3>
+                        <p class="text-slate-300 text-sm leading-relaxed mt-2.5">
+                            Managed direct B2B hardware procurement, router firmware verification, and industrial component sourcing across Karachi’s major technology hubs—including <span class="text-white font-medium">Techno City, Naz Plaza, and Uni Center</span>—ensuring rapid replacement SLAs and verified hardware authenticity.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 6. TECHNICAL STACK MATRIX -->
+        <section id="stack" class="py-16 lg:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-slate-800/60">
+            <div class="max-w-3xl mb-12">
+                <div class="font-mono text-xs text-cyan-400 tracking-widest uppercase mb-2">// 05. TECHNICAL STACK MATRIX</div>
+                <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-white">Full-Spectrum Cyber-Physical Tooling</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Column 1: Edge & Embedded -->
+                <div class="cyber-card rounded-2xl p-6">
+                    <div class="flex items-center space-x-3 mb-5 pb-3 border-b border-slate-800">
+                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+                        <h3 class="font-mono font-bold text-sm tracking-wider text-white uppercase">Edge &amp; Embedded</h3>
+                    </div>
+                    <ul class="space-y-3 font-mono text-xs sm:text-sm">
+                        <li class="flex items-center justify-between text-slate-200">
+                            <span>Embedded C / POSIX C</span>
+                            <span class="text-emerald-400 text-xs">FIRMWARE / DAEMONS</span>
+                        </li>
+                        <li class="flex items-center justify-between text-slate-200">
+                            <span>ESP32 (ESP-IDF / RTOS)</span>
+                            <span class="text-slate-500 text-xs">MCU TELEMETRY</span>
+                        </li>
+                        <li class="flex items-center justify-between text-slate-200">
+                            <span>Arduino Ecosystem</span>
+                            <span class="text-slate-500 text-xs">PROTOTYPING</span>
+                        </li>
+                        <li class="flex items-center justify-between text-slate-200">
+                            <span>Modbus RTU/TCP &amp; Relay I/O</span>
+                            <span class="text-slate-500 text-xs">INDUSTRIAL SENSING</span>
+                        </li>
+                        <li class="flex items-center justify-between text-slate-200">
+                            <span>Non-Volatile Flash (NVS)</span>
+                            <span class="text-slate-500 text-xs">POWER-LOSS SAFE</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Column 2: Industrial Networking & VPN -->
+                <div class="cyber-card rounded-2xl p-6">
+                    <div class="flex items-center space-x-3 mb-5 pb-3 border-b border-slate-800">
+                        <span class="w-2.5 h-2.5 rounded-full bg-cyan-400"></span>
+                        <h3 class="font-mono font-bold text-sm tracking-wider text-white uppercase">Industrial Networking &amp; VPN</h3>
+                    </div>
+                    <ul class="space-y-3 font-mono text-xs sm:text-sm">
+                        <li class="flex items-center justify-between text-slate-200">
+                            <span>OpenWrt Custom Builds</span>
+                            <span class="text-cyan-400 text-xs">EXTROOT / KERNEL</span>
+                        </li>
+                        <li class="flex items-center justify-between text-slate-200">
+                            <span>Tailscale &amp; ZeroTier</span>
+                            <span class="text-slate-500 text-xs">CGNAT MESH VPN</span>
+                        </li>
+                        <li class="flex items-center justify-between text-slate-200">
+                            <span>L2TP/IPsec &amp; OpenVPN</span>
+                            <span class="text-slate-500 text-xs">SITE-TO-SITE</span>
+                        </li>
+                        <li class="flex items-center justify-between text-slate-200">
+                            <span>TP-Link Omada / D-Link</span>
+                            <span class="text-slate-500 text-xs">EDGE GATEWAYS</span>
+                        </li>
+                        <li class="flex items-center justify-between text-slate-200">
+                            <span>Structured Cat6 / T568B</span>
+                            <span class="text-slate-500 text-xs">LAYER-1 INFRA</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Column 3: Full-Stack & SCADA -->
+                <div class="cyber-card rounded-2xl p-6">
+                    <div class="flex items-center space-x-3 mb-5 pb-3 border-b border-slate-800">
+                        <span class="w-2.5 h-2.5 rounded-full bg-cyan-400"></span>
+                        <h3 class="font-mono font-bold text-sm tracking-wider text-white uppercase">Full-Stack &amp; SCADA</h3>
+                    </div>
+                    <ul class="space-y-3 font-mono text-xs sm:text-sm">
+                        <li class="flex items-center justify-between text-slate-200">
+                            <span>.NET / C# &amp; ASP.NET Core</span>
+                            <span class="text-cyan-400 text-xs">ENTERPRISE API</span>
+                        </li>
+                        <li class="flex items-center justify-between text-slate-200">
+                            <span>Blazor (Server / WASM)</span>
+                            <span class="text-slate-500 text-xs">SCADA DASHBOARDS</span>
+                        </li>
+                        <li class="flex items-center justify-between text-slate-200">
+                            <span>Next.js &amp; React</span>
+                            <span class="text-slate-500 text-xs">MODERN WEB UI</span>
+                        </li>
+                        <li class="flex items-center justify-between text-slate-200">
+                            <span>SQL Server &amp; SQLite</span>
+                            <span class="text-slate-500 text-xs">TELEMETRY DB</span>
+                        </li>
+                        <li class="flex items-center justify-between text-slate-200">
+                            <span>Windows Server &amp; IIS</span>
+                            <span class="text-slate-500 text-xs">ON-PREM HOSTING</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. INTERACTIVE CONTACT / B2B CONSULTATION SECTION -->
+        <section id="contact" class="py-16 lg:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-slate-800/60">
+            <div class="rounded-3xl bg-gradient-to-br from-[#11192a] to-[#0a0e17] border border-slate-800 p-6 sm:p-10 lg:p-12 shadow-2xl">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+                    
+                    <!-- Left Column: Direct Engineering Info -->
+                    <div class="lg:col-span-5 space-y-6">
+                        <div class="inline-flex items-center px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-mono text-xs">
+                            <span class="w-2 h-2 rounded-full bg-emerald-400 mr-2 animate-pulse"></span>
+                            Karachi, Pakistan • Available for Onsite &amp; Remote Deployments
+                        </div>
+
+                        <h2 class="text-2xl sm:text-3xl font-bold text-white">
+                            Initiate Technical Consultation
+                        </h2>
+                        <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+                            Planning a remote BMS/chiller gateway, bypassing ISP CGNAT restrictions across distributed facilities, or deploying predictive runtime telemetry on plant machinery? Submit your facility specifications below.
+                        </p>
+
+                        <div class="space-y-4 pt-2 font-mono text-xs">
+                            <!-- Direct Contact Channels -->
+                            <div class="p-4 rounded-xl bg-slate-900/95 border border-cyan-500/30 space-y-3.5">
+                                <div class="flex items-center space-x-3.5 pb-3 border-b border-slate-800/90">
+                                    <div class="relative shrink-0 w-14 h-14 rounded-full overflow-hidden border-2 border-cyan-500/50 shadow-md shadow-cyan-500/20">
+                                        <img src="Bahira.jpg" alt="Ahsan Abbas - System Architect & Integrator" class="w-full h-full object-cover object-top" onerror="this.onerror=null;this.src='https://placehold.co/150x150/0e1422/06b6d4?text=AA';">
+                                    </div>
+                                    <div>
+                                        <div class="text-white font-bold text-sm">Ahsan Abbas</div>
+                                        <div class="text-cyan-400 text-[11px]">System Architect &amp; Integrator</div>
+                                        <div class="text-emerald-400 text-[10px] mt-0.5 flex items-center">
+                                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 mr-1.5"></span>
+                                            DIRECT ENGINEERING CHANNELS
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex flex-col space-y-2.5">
+                                    <a href="tel:+923191869089" class="flex items-center justify-between p-2.5 rounded-lg bg-[#090d16] border border-slate-800 hover:border-cyan-500/50 text-slate-200 hover:text-cyan-300 transition group">
+                                        <span class="flex items-center">
+                                            <svg class="w-4 h-4 mr-2.5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                                            </svg>
+                                            <span>+92-319-1869089</span>
+                                        </span>
+                                        <span class="text-[10px] text-slate-500 group-hover:text-cyan-400">VOICE / CALL &rarr;</span>
+                                    </a>
+
+                                    <a href="https://wa.me/923191869089" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-2.5 rounded-lg bg-[#090d16] border border-slate-800 hover:border-emerald-500/50 text-slate-200 hover:text-emerald-300 transition group">
+                                        <span class="flex items-center">
+                                            <svg class="w-4 h-4 mr-2.5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                                            </svg>
+                                            <span>+92-319-1869089</span>
+                                        </span>
+                                        <span class="text-[10px] text-emerald-400">WHATSAPP DIRECT &rarr;</span>
+                                    </a>
+
+                                    <a href="mailto:ahsanabbasofiical.mail@gmail.com" class="flex items-center justify-between p-2.5 rounded-lg bg-[#090d16] border border-slate-800 hover:border-cyan-500/50 text-slate-200 hover:text-cyan-300 transition group break-all">
+                                        <span class="flex items-center pr-2">
+                                            <svg class="w-4 h-4 mr-2.5 shrink-0 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                            </svg>
+                                            <span>ahsanabbasofiical.mail@gmail.com</span>
+                                        </span>
+                                        <span class="text-[10px] shrink-0 text-slate-500 group-hover:text-cyan-400">EMAIL &rarr;</span>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="p-4 rounded-xl bg-slate-900/90 border border-slate-800">
+                                <div class="text-slate-500 mb-1">PRIMARY ONSITE COVERAGE</div>
+                                <div class="text-slate-200">Port Qasim • Korangi Industrial Area • S.I.T.E. • North Karachi</div>
+                            </div>
+                            <div class="p-4 rounded-xl bg-slate-900/90 border border-slate-800">
+                                <div class="text-slate-500 mb-1">NATIONWIDE &amp; REMOTE ARCHITECTURE</div>
+                                <div class="text-cyan-400">Lahore • Sukkur • Hyderabad • Global Encrypted Mesh</div>
+                            </div>
+                            <div class="p-4 rounded-xl bg-slate-900/90 border border-slate-800">
+                                <div class="text-slate-500 mb-1">AFFILIATION</div>
+                                <div class="text-slate-200">Ahsan Abbas // KRC Total Solutions</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Interactive B2B Inquiry Form -->
+                    <div class="lg:col-span-7 bg-[#090d16] rounded-2xl border border-slate-800 p-6 sm:p-8">
+                        <form id="consultation-form" class="space-y-5">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                                <div>
+                                    <label for="facility-name" class="block font-mono text-xs text-slate-400 mb-2">FACILITY / ORGANIZATION NAME *</label>
+                                    <input type="text" id="facility-name" required placeholder="e.g., Indus Pharma / Textile Unit 4"
+                                        class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-700 text-white text-sm placeholder-slate-500 focus:outline-none focus:border-cyan-500 transition">
+                                </div>
+                                <div>
+                                    <label for="industrial-zone" class="block font-mono text-xs text-slate-400 mb-2">LOCATION / INDUSTRIAL ZONE *</label>
+                                    <input type="text" id="industrial-zone" required placeholder="e.g., Korangi, Port Qasim, Lahore"
+                                        class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-700 text-white text-sm placeholder-slate-500 focus:outline-none focus:border-cyan-500 transition">
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                                <div>
+                                    <label for="contact-person" class="block font-mono text-xs text-slate-400 mb-2">ENGINEER / CONTACT PERSON *</label>
+                                    <input type="text" id="contact-person" required placeholder="Name & Designation"
+                                        class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-700 text-white text-sm placeholder-slate-500 focus:outline-none focus:border-cyan-500 transition">
+                                </div>
+                                <div>
+                                    <label for="solution-type" class="block font-mono text-xs text-slate-400 mb-2">REQUIRED ARCHITECTURE *</label>
+                                    <select id="solution-type" required
+                                        class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-700 text-white text-sm focus:outline-none focus:border-cyan-500 transition">
+                                        <option value="Industrial Mesh VPN & CGNAT Bypass">Industrial Mesh VPN &amp; CGNAT Bypass</option>
+                                        <option value="Smart IIoT & Predictive Telemetry">Smart IIoT &amp; Predictive Telemetry</option>
+                                        <option value="Custom SCADA & Enterprise Dashboard">Custom SCADA &amp; Enterprise Dashboard</option>
+                                        <option value="Structured Network & Hardware Integration">Structured Network &amp; Hardware Integration</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label for="technical-brief" class="block font-mono text-xs text-slate-400 mb-2">TECHNICAL BRIEF / SYSTEM REQUIREMENTS *</label>
+                                <textarea id="technical-brief" rows="4" required placeholder="Describe your PLC/BMS controllers, ISP connectivity constraints, sensor points, or telemetry goals..."
+                                    class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-700 text-white text-sm placeholder-slate-500 focus:outline-none focus:border-cyan-500 transition"></textarea>
+                            </div>
+
+                            <button type="submit" class="w-full py-3.5 px-6 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-sm tracking-wide transition shadow-lg shadow-cyan-500/20 flex items-center justify-center">
+                                <span>TRANSMIT TECHNICAL INQUIRY</span>
+                                <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                </svg>
+                            </button>
+                        </form>
+
+                        <!-- Instant Interactive Confirmation Message Box (No alert() used) -->
+                        <div id="form-confirmation" class="hidden mt-5 p-5 rounded-xl bg-emerald-500/10 border border-emerald-500/40 text-sm space-y-3">
+                            <div class="flex items-center justify-between">
+                                <span class="font-mono font-bold text-emerald-400 text-xs">STATUS: INQUIRY PACKET LOGGED [ACK-200]</span>
+                                <button type="button" onclick="resetConsultationForm()" class="font-mono text-xs text-slate-400 hover:text-white underline">New Inquiry</button>
+                            </div>
+                            <p id="confirmation-details" class="text-slate-200 text-xs sm:text-sm leading-relaxed"></p>
+                            <div class="pt-2 border-t border-emerald-500/20 flex flex-wrap gap-3 font-mono text-xs">
+                                <a id="direct-mailto-btn" href="mailto:ahsanabbasofiical.mail@gmail.com" class="px-3 py-1.5 rounded-lg bg-cyan-500/20 border border-cyan-500/40 text-cyan-300 hover:bg-cyan-500 hover:text-slate-950 transition">
+                                    Open in Email Client &rarr;
+                                </a>
+                                <a id="direct-whatsapp-btn" href="https://wa.me/923191869089" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-lg bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 hover:bg-emerald-500 hover:text-slate-950 transition">
+                                    Send via WhatsApp &rarr;
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800/80 bg-[#080b12] py-8 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 font-mono text-xs text-slate-400">
+            <div>
+                <span class="text-white font-semibold">AHSAN ABBAS</span> // SYSTEM ARCHITECT &amp; INTEGRATOR (KRC TOTAL SOLUTIONS)
+            </div>
+            <div class="flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
+                <a href="tel:+923191869089" class="text-slate-300 hover:text-cyan-400 transition">+92-319-1869089</a>
+                <span class="text-slate-700">•</span>
+                <a href="mailto:ahsanabbasofiical.mail@gmail.com" class="text-slate-300 hover:text-cyan-400 transition">ahsanabbasofiical.mail@gmail.com</a>
+                <span class="text-slate-700">•</span>
+                <span class="text-emerald-400">KARACHI, PK</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Interactive JavaScript Logic -->
+    <script>
+        // 1. Live PKT (UTC+5) System Clock in Top Telemetry Bar
+        function updateSystemClock() {
+            const now = new Date();
+            const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+            const pkt = new Date(utc + (3600000 * 5));
+            const hh = String(pkt.getHours()).padStart(2, '0');
+            const mm = String(pkt.getMinutes()).padStart(2, '0');
+            const ss = String(pkt.getSeconds()).padStart(2, '0');
+            const clockEl = document.getElementById('live-clock');
+            if (clockEl) {
+                clockEl.textContent = `PKT ${hh}:${mm}:${ss} UTC+5`;
+            }
+        }
+        setInterval(updateSystemClock, 1000);
+        updateSystemClock();
+
+        // 2. Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const iconOpen = document.getElementById('menu-icon-open');
+        const iconClose = document.getElementById('menu-icon-close');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            const isHidden = mobileMenu.classList.contains('hidden');
+            if (isHidden) {
+                mobileMenu.classList.remove('hidden');
+                iconOpen.classList.add('hidden');
+                iconClose.classList.remove('hidden');
+            } else {
+                mobileMenu.classList.add('hidden');
+                iconOpen.classList.remove('hidden');
+                iconClose.classList.add('hidden');
+            }
+        });
+
+        document.querySelectorAll('.mobile-nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                iconOpen.classList.remove('hidden');
+                iconClose.classList.add('hidden');
+            });
+        });
+
+        // 3. Interactive Architecture Node Inspector (Hero Section)
+        const archNodesData = {
+            edge: {
+                title: '[EDGE_NODE] ESP32-WROOM-32D // INDUSTRIAL I/O',
+                ip: 'ADDR: 10.147.18.42 (INTERNAL)',
+                desc: 'Interfaces directly with HVAC chillers and compressor contactors via opto-isolated interposing relays. Executes deterministic C firmware with non-volatile flash wear-leveling to preserve cumulative runtime hours across abrupt facility power outages.',
+                metrics: [
+                    { label: 'RUNTIME', val: '1,894.5 HRS', color: 'text-white' },
+                    { label: 'NVS FLASH', val: 'CRC32 OK', color: 'text-emerald-400' },
+                    { label: 'POLL RATE', val: '250 ms', color: 'text-cyan-400' }
+                ]
+            },
+            mesh: {
+                title: '[MESH_GATEWAY] TP-LINK ER605v2 / D-LINK DIR-853 (OPENWRT)',
+                ip: 'TUNNEL: 100.84.219.11 (CGNAT-BYPASS)',
+                desc: 'Custom OpenWrt builds running ZeroTier L2 bridges and Tailscale WireGuard overlays behind restrictive ISP CGNAT connections. Supervised by a <48KB native C watchdog daemon that detects packet loss and triggers self-healing tunnel resets.',
+                metrics: [
+                    { label: 'ENCRYPTION', val: 'CHACHA20-POLY1305', color: 'text-cyan-400' },
+                    { label: 'WATCHDOG', val: 'C DAEMON ACTIVE', color: 'text-emerald-400' },
+                    { label: 'NAT TYPE', val: 'SYMMETRIC BYPASSED', color: 'text-white' }
+                ]
+            },
+            cloud: {
+                title: '[SCADA_CORE] CITYFLOW .NET BLAZOR & SQLITE TELEMETRY',
+                ip: 'HOST: IIS-PROD-KHI // HTTPS + SIGNALR',
+                desc: 'Enterprise ASP.NET Core & Blazor dashboard ingesting edge frames into WAL-mode SQLite/SQL Server databases. Automatically dispatches WhatsApp and SMTP maintenance alerts 100 hours before the 2,000-hour compressor service threshold.',
+                metrics: [
+                    { label: 'DB ENGINE', val: 'SQLITE WAL / MSSQL', color: 'text-white' },
+                    { label: 'ALERTING', val: 'WHATSAPP + SMTP', color: 'text-emerald-400' },
+                    { label: 'SYNC LATENCY', val: '< 120 ms', color: 'text-cyan-400' }
+                ]
+            }
+        };
+
+        function selectArchNode(nodeKey) {
+            const data = archNodesData[nodeKey];
+            if (!data) return;
+
+            document.querySelectorAll('.arch-node').forEach(btn => btn.classList.remove('node-active'));
+            const activeBtn = document.getElementById(`node-${nodeKey}`);
+            if (activeBtn) activeBtn.classList.add('node-active');
+
+            document.getElementById('inspector-title').textContent = data.title;
+            document.getElementById('inspector-ip').textContent = data.ip;
+            document.getElementById('inspector-desc').textContent = data.desc;
+
+            const metricsContainer = document.getElementById('inspector-metrics');
+            metricsContainer.innerHTML = data.metrics.map((m, idx) => `
+                <div class="bg-slate-900/90 px-2.5 py-1.5 rounded border border-slate-800 ${idx === 2 ? 'col-span-2 sm:col-span-1' : ''}">
+                    <span class="text-slate-500">${m.label}:</span> <span class="${m.color}">${m.val}</span>
+                </div>
+            `).join('');
+        }
+
+        // 4. Filterable Field Deployments Grid
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const projectCards = document.querySelectorAll('.project-card');
+
+        filterButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const filter = btn.getAttribute('data-filter');
+
+                filterButtons.forEach(b => {
+                    b.classList.remove('bg-cyan-500', 'text-slate-950', 'font-bold');
+                    b.classList.add('bg-slate-900', 'text-slate-300', 'border', 'border-slate-700');
+                });
+                btn.classList.remove('bg-slate-900', 'text-slate-300', 'border', 'border-slate-700');
+                btn.classList.add('bg-cyan-500', 'text-slate-950', 'font-bold');
+
+                projectCards.forEach(card => {
+                    const categories = card.getAttribute('data-category').split(' ');
+                    if (filter === 'all' || categories.includes(filter)) {
+                        card.classList.remove('hidden');
+                    } else {
+                        card.classList.add('hidden');
+                    }
+                });
+            });
+        });
+
+        // 5. Interactive IIoT Predictive Compressor & Watchdog Simulator
+        let simHours = 1885.0;
+        const maxThreshold = 2000.0;
+        let alertDispatched = false;
+
+        function appendWatchdogLog(tag, tagColor, message) {
+            const consoleEl = document.getElementById('watchdog-console');
+            const now = new Date();
+            const ts = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
+            const line = document.createElement('div');
+            line.innerHTML = `<span class="text-slate-500">[${ts}]</span> <span class="${tagColor}">${tag}</span> ${message}`;
+            consoleEl.appendChild(line);
+            consoleEl.scrollTop = consoleEl.scrollHeight;
+        }
+
+        function updateTelemetryUI() {
+            const remaining = Math.max(0, maxThreshold - simHours);
+            const pct = Math.min(100, (simHours / maxThreshold) * 100);
+
+            document.getElementById('sim-hours').textContent = `${simHours.toFixed(1)} hrs`;
+            document.getElementById('sim-remaining').textContent = `${remaining.toFixed(1)} hrs`;
+            document.getElementById('sim-percent').textContent = `${pct.toFixed(2)}%`;
+
+            const bar = document.getElementById('sim-progress-bar');
+            const remEl = document.getElementById('sim-remaining');
+            bar.style.width = `${pct}%`;
+
+            if (remaining <= 100) {
+                bar.className = 'h-full rounded-full bg-gradient-to-r from-amber-500 to-rose-500 transition-all duration-300';
+                remEl.className = 'text-2xl font-bold text-amber-400 mt-1';
+            } else {
+                bar.className = 'h-full rounded-full bg-gradient-to-r from-cyan-500 to-emerald-400 transition-all duration-300';
+                remEl.className = 'text-2xl font-bold text-emerald-400 mt-1';
+            }
+        }
+
+        function advanceCompressorHours(delta) {
+            simHours = Math.min(maxThreshold, simHours + delta);
+            updateTelemetryUI();
+            const remaining = maxThreshold - simHours;
+
+            appendWatchdogLog('[ESP32-NVS]', 'text-cyan-400', `Relay active: +${delta}h logged to flash (${simHours.toFixed(1)}h total).`);
+
+            if (remaining <= 100 && !alertDispatched) {
+                alertDispatched = true;
+                appendWatchdogLog('[WHATSAPP-API]', 'text-amber-400', `THRESHOLD BREACH (${remaining.toFixed(1)}h left before 2,000h overhaul): Automated WhatsApp alert sent to Maintenance Lead!`);
+            }
+        }
+
+        function simulateTunnelDrop() {
+            const rttEl = document.getElementById('sim-rtt');
+            const stateEl = document.getElementById('sim-tunnel-state');
+
+            rttEl.textContent = 'TIMEOUT';
+            rttEl.className = 'text-2xl font-bold text-rose-400 mt-1';
+            stateEl.textContent = 'FAILOVER TRIGGERED';
+            stateEl.className = 'text-[11px] text-amber-400 mt-1';
+
+            appendWatchdogLog('[ER605-C]', 'text-rose-400', 'Primary ISP NAT drop detected on eth0.2! Restarting ZeroTier & dispatching WhatsApp/SMTP alert...');
+
+            setTimeout(() => {
+                rttEl.textContent = '21 ms';
+                rttEl.className = 'text-2xl font-bold text-cyan-400 mt-1';
+                stateEl.textContent = 'MESH RECOVERED';
+                stateEl.className = 'text-[11px] text-emerald-400 mt-1';
+                appendWatchdogLog('[ER605-C]', 'text-emerald-400', 'Mesh tunnel re-established via backup route (RTT: 21ms).');
+            }, 1400);
+        }
+
+        function resetTelemetrySim() {
+            simHours = 1885.0;
+            alertDispatched = false;
+            updateTelemetryUI();
+            appendWatchdogLog('[SYSTEM]', 'text-slate-300', 'NVS runtime counter reset to baseline 1885.0h.');
+        }
+
+        // 6. Interactive B2B Consultation Form Handler
+        const consultForm = document.getElementById('consultation-form');
+        const confirmationBox = document.getElementById('form-confirmation');
+        const confirmationDetails = document.getElementById('confirmation-details');
+
+        consultForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const facility = document.getElementById('facility-name').value.trim();
+            const zone = document.getElementById('industrial-zone').value.trim();
+            const person = document.getElementById('contact-person').value.trim();
+            const solution = document.getElementById('solution-type').value;
+            const brief = document.getElementById('technical-brief').value.trim();
+
+            confirmationDetails.textContent = `Thank you, ${person}. Technical architecture inquiry for "${facility}" (${zone}) regarding [${solution}] is ready. For immediate engineering dispatch, reach Ahsan Abbas directly at +92-319-1869089 or ahsanabbasofiical.mail@gmail.com.`;
+
+            const subject = encodeURIComponent(`[Industrial Consultation] ${facility} - ${solution}`);
+            const body = encodeURIComponent(`Contact: ${person}\nFacility: ${facility}\nLocation: ${zone}\nArchitecture: ${solution}\n\nTechnical Brief:\n${brief}`);
+            document.getElementById('direct-mailto-btn').href = `mailto:ahsanabbasofiical.mail@gmail.com?subject=${subject}&body=${body}`;
+            document.getElementById('direct-whatsapp-btn').href = `https://wa.me/923191869089?text=${body}`;
+            
+            consultForm.classList.add('hidden');
+            confirmationBox.classList.remove('hidden');
+        });
+
+        function resetConsultationForm() {
+            consultForm.reset();
+            confirmationBox.classList.add('hidden');
+            consultForm.classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
